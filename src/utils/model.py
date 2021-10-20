@@ -2,6 +2,8 @@
 import tensorflow as tf
 import time
 import os
+import matplotlib.pyplot as plt
+import pandas as pd 
 
 
 def create_model(LOSS_FUNCTION,OPTIMIZER,METRICS, NUM_CLASSES):
@@ -35,6 +37,15 @@ def save_model(model, model_name, model_dir):
       unique_filename = get_unique_filename(model_name)
       path_to_model = os.path.join(model_dir,unique_filename)
       model.save(path_to_model)
+
+def save_plots(df,plots_name,plots_dir):
+      df.plot(figsize=(8,5))
+      plt.grid(True)
+      plt.gca().set_ylim(0,1)
+     
+      path_to_plot = os.path.join(plots_dir,plots_name)
+      plt.savefig(path_to_plot)
+      plt.show()
 
      
      

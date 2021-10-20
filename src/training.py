@@ -1,8 +1,9 @@
 from src.utils.common import read_config
 import argparse 
 from src.utils.data_mgmt import get_data
-from src.utils.model import create_model, save_model
+from src.utils.model import create_model, save_model,save_plots
 import os
+import pandas as pd
 
 
 
@@ -28,21 +29,28 @@ def training (config_path):
     ## Fitting data into the model
     EPOCHS = config["params"]["epochs"]
     VALIDATION = (X_valid, y_valid)
-
     history = model.fit(X_train,y_train, epochs=EPOCHS, validation_data= VALIDATION)
 
 
     
     artifacts_dir = config["artifacts"]["artifacts_dir"]
-
     model_dir = config["artifacts"]["model_dir"]
-
     model_name = config["artifacts"]["model_name"]
+
 
     model_dir_path = os.path.join(artifacts_dir,model_dir)
     os.makedirs(model_dir_path, exist_ok=True)
-
     save_model(model, model_name, model_dir_path )
+
+
+    
+    plots_dir = config["artifacts"]["plots_dir"]
+    plots_name = config["artifacts"]["plots_name"]
+
+    plots_dir_path = os.path.join(artifacts_dir, plots_dir)
+    os.makedirs(plots_dir_path,exist_ok = True)
+    save_plots(pd.DataFrame(history.history), plots_name, plots_dir_path)
+
 
 
 if __name__ == '__main__':
