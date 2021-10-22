@@ -16,6 +16,8 @@ artifacts:
   plots_name : plot.jpg
   checkpoint_dir: checkpoint
   model_name: model.h5
+  pickle_model_dir : pickle
+  pickle_model_name : model.save
 
 
 logs:

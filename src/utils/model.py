@@ -4,6 +4,7 @@ import time
 import os
 import matplotlib.pyplot as plt
 import pandas as pd 
+import pickle as pl
 
 
 def create_model(LOSS_FUNCTION,OPTIMIZER,METRICS, NUM_CLASSES):
@@ -17,27 +18,28 @@ def create_model(LOSS_FUNCTION,OPTIMIZER,METRICS, NUM_CLASSES):
 
     # Model creation "Classifier"
     model_clf = tf.keras.models.Sequential(LAYERS)
-
     model_clf.summary()
 
     ## Model compiling
-
     model_clf.compile(loss=LOSS_FUNCTION, optimizer=OPTIMIZER, metrics=METRICS)
     return model_clf ## untrained Model
 
     
     
-
+## Fuction for getting unique_filename
 def get_unique_filename(filename):
       unique_filename = time.strftime(f"%Y%m%d_%H%M%S_{filename}")
       return unique_filename
 
 
+## Function for saving the model
 def save_model(model, model_name, model_dir):
       unique_filename = get_unique_filename(model_name)
       path_to_model = os.path.join(model_dir,unique_filename)
       model.save(path_to_model)
 
+
+## Function for saving plots
 def save_plots(df,plots_name,plots_dir):
       df.plot(figsize=(8,5))
       plt.grid(True)
@@ -46,6 +48,13 @@ def save_plots(df,plots_name,plots_dir):
       path_to_plot = os.path.join(plots_dir,plots_name)
       plt.savefig(path_to_plot)
       plt.show()
+
+
+## Function for saving Pickle file
+def pickle_file(model, pickle_model_name, pickle_model_dir):
+      unique_file = get_unique_filename(pickle_model_name)
+      pickle_model_path = os.path.join(pickle_model_dir,unique_file)
+      pl.dump(unique_file, open(pickle_model_path, 'wb'))
 
      
      
