@@ -1,2 +1,4 @@
+## Applying gitignore on the model dir
+
 checkpoint_state
 model
