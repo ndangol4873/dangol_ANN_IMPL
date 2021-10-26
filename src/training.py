@@ -1,7 +1,10 @@
+from src.utils.callbacks import callbacks
 from src.utils.common import read_config
 import argparse 
 from src.utils.data_mgmt import get_data
 from src.utils.model import create_model, save_model,save_plots,pickle_file
+from src.utils.callbacks import callbacks
+from src.utils.common import get_timestamp
 import os
 import pandas as pd
 
@@ -26,10 +29,13 @@ def training (config_path):
     model = create_model(LOSS_FUNCTION,OPTIMIZER,METRICS, NUM_CLASSES)
 
 
-    ## Fitting data into the model
+    ## Fitting data into the model and getting trained
     EPOCHS = config["params"]["epochs"]
     VALIDATION = (X_valid, y_valid)
-    history = model.fit(X_train,y_train, epochs=EPOCHS, validation_data= VALIDATION)
+
+    CALLBACK_LIST = callbacks(config, X_train)
+
+    history = model.fit(X_train,y_train, epochs=EPOCHS, validation_data= VALIDATION, callbacks= CALLBACK_LIST)
 
 
    ## IMplementation of ("save_model") Function from [model.py] 

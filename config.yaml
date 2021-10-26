@@ -6,6 +6,8 @@ params:
   metrics: accuracy
   optimizer: SGD
   validation_datasize: 5000
+  patience : 5
+  restore_best_weights : True   
 
 
 
@@ -14,13 +16,13 @@ artifacts:
   model_dir: model
   plots_dir: plots
   plots_name : plot.jpg
-  checkpoint_dir: checkpoint
   model_name: model.h5
   pickle_model_dir : pickle
   pickle_model_name : model.save
+  CHECKPOINT_DIR : checkpoint
 
 
 logs:
   logs_dir: logs_dir
   general_logs: general_logs
-  tensorboard_logs: tensorboard_logs
+  TENSORBOARD_ROOT_LOG_DIR: tensorboard_logs
